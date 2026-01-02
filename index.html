@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>House Rules & Tables</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>House Rules & Tables</h1>
+      <p class="muted">Static site hosted on GitHub Pages.</p>
+    </header>
+
+    <section class="card">
+      <h2>Tools</h2>
+      <ul>
+        <li><a href="generator.html">Background Generator</a></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Rules</h2>
+      <p class="muted">Add your rules pages here (e.g., <code>rules.html</code> or a <code>/rules/</code> folder).</p>
+    </section>
+
+    <footer class="footer muted">
+      <p>Last updated: <span id="buildStamp"></span></p>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("buildStamp").textContent = new Date().toLocaleString();
+  </script>
+</body>
+</html>
