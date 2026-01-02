@@ -110,6 +110,18 @@
     .warn{color:var(--bad);font-weight:700}
     .ok{color:var(--good);font-weight:700}
     .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;}
+    /* Force even columns in the lookup tables */
+    table{
+      table-layout: fixed;   /* key: stops content from resizing columns */
+      width: 100%;
+    }
+
+    /* Make each of the 3 columns equal width */
+    th, td{
+      width: 33.333%;
+      overflow-wrap: anywhere;  /* prevents long text from blowing out layout */
+      word-break: normal;
+    }
   </style>
 </head>
 <body>
