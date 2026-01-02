@@ -1,26 +1,38 @@
 // generator.js
+// Background/profession generator for thedenofsin/house-rules (GitHub Pages)
+// - Rolls d100 on router table -> category
+// - Rolls d100 on category table -> profession
+// - Disregards disallowed results (Apprentice/Student/Teacher) by rerolling
+//   (safety max attempts to avoid infinite loops)
+
 (function () {
+  "use strict";
+
+  // Expect tables.js to define window.BG_TABLES = { router: [...], categories: { "Category": [...] } }
+  if (!window.BG_TABLES || !window.BG_TABLES.router || !window.BG_TABLES.categories) {
+    throw new Error("BG_TABLES not found. Ensure tables.js loads before generator.js and defines window.BG_TABLES.");
+  }
+
   const { router, categories } = window.BG_TABLES;
 
   function rollDie(sides) {
-    // uniform int in [1, sides]
     return Math.floor(Math.random() * sides) + 1;
   }
 
   function lookupRange(table, roll) {
-    const hit = table.find(r => roll >= r.min && roll <= r.max);
-    if (!hit) {
-      throw new Error(`No table entry for roll ${roll}.`);
-    }
+    const hit = table.find((r) => roll >= r.min && roll <= r.max);
+    if (!hit) throw new Error(`No table entry for roll ${roll}. Check table ranges.`);
     return hit.text;
   }
 
-  function isApprentice(text) {
-    return /Apprentice\b/i.test(text) && /Pick a profession/i.test(text);
+  function isDisallowedProfession(text) {
+    // Defensive: if any table still contains these, reroll and ignore.
+    // Word boundaries prevent false hits like "Teacher's Pet" etc.
+    return /\b(Apprentice|Student|Teacher)\b/i.test(text);
   }
 
   function escapeHtml(s) {
-    return s
+    return String(s)
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
@@ -33,70 +45,59 @@
     category: null,
     secondaryRoll: null,
     profession: null,
-    apprenticeExtra: null // { categoryRoll, categoryName, professionText }
   };
 
   function generatePrimary() {
     const r = rollDie(100);
     const category = lookupRange(router, r);
+    if (!categories[category]) {
+      throw new Error(`Router roll mapped to '${category}', but categories['${category}'] is missing in tables.js.`);
+    }
     state.primaryRoll = r;
     state.category = category;
-    state.apprenticeExtra = null;
   }
 
   function generateSecondary() {
     if (!state.category) generatePrimary();
 
     const table = categories[state.category];
-    if (!table) throw new Error(`Missing category table: ${state.category}`);
+    if (!Array.isArray(table) || table.length === 0) {
+      throw new Error(`Category table '${state.category}' is missing or empty in tables.js.`);
+    }
 
-    const r = rollDie(100);
-    const profession = lookupRange(table, r);
+    let r = null;
+    let profession = null;
+
+    // Reroll loop for disallowed results (and any future tables you might edit).
+    for (let i = 0; i < 100; i++) {
+      r = rollDie(100);
+      profession = lookupRange(table, r);
+      if (!isDisallowedProfession(profession)) break;
+    }
+
+    if (profession && isDisallowedProfession(profession)) {
+      throw new Error(
+        `Exceeded reroll limit trying to avoid disallowed results in '${state.category}'. ` +
+          `Either the table is dominated by disallowed entries or ranges are wrong.`
+      );
+    }
 
     state.secondaryRoll = r;
     state.profession = profession;
-    state.apprenticeExtra = null;
-
-    // Branch rule: Apprentice → pick another profession (from router + subtable).
-    if (isApprentice(profession)) {
-      const r2a = rollDie(100);
-      const cat2 = lookupRange(router, r2a);
-      const table2 = categories[cat2];
-      if (!table2) throw new Error(`Missing category table: ${cat2}`);
-      const r2b = rollDie(100);
-      const prof2 = lookupRange(table2, r2b);
-
-      state.apprenticeExtra = {
-        routerRoll: r2a,
-        categoryName: cat2,
-        categoryRoll: r2b,
-        professionText: prof2
-      };
-    }
   }
 
   function render() {
     const out = document.getElementById("output");
     const dbg = document.getElementById("debug");
 
+    if (!out) throw new Error("Missing #output element in generator.html.");
+    if (!dbg) throw new Error("Missing #debug element in generator.html.");
+
     if (!state.category || !state.profession) {
       out.innerHTML = `<p class="muted">Click “Generate Background”.</p>`;
       dbg.textContent = "";
       return;
     }
-
-    const apprenticeBlock = state.apprenticeExtra
-      ? `
-        <div class="hr"></div>
-        <h2>Apprenticeship (extra roll)</h2>
-        <div class="kv">
-          <div class="k">Router roll (d100)</div>
-          <div class="v">${state.apprenticeExtra.routerRoll} → ${escapeHtml(state.apprenticeExtra.categoryName)}</div>
-          <div class="k">Profession roll (d100)</div>
-          <div class="v">${state.apprenticeExtra.categoryRoll} → ${escapeHtml(state.apprenticeExtra.professionText)}</div>
-        </div>
-      `
-      : "";
 
     out.innerHTML = `
       <h2>Result</h2>
@@ -107,38 +108,55 @@
         <div class="k">Secondary profession (d100)</div>
         <div class="v">${state.secondaryRoll} → ${escapeHtml(state.profession)}</div>
       </div>
-      ${apprenticeBlock}
     `;
 
-    const debugObj = {
-      primaryRoll: state.primaryRoll,
-      category: state.category,
-      secondaryRoll: state.secondaryRoll,
-      profession: state.profession,
-      apprenticeship: state.apprenticeExtra
-    };
-    dbg.textContent = JSON.stringify(debugObj, null, 2);
+    dbg.textContent = JSON.stringify(
+      {
+        primaryRoll: state.primaryRoll,
+        category: state.category,
+        secondaryRoll: state.secondaryRoll,
+        profession: state.profession,
+      },
+      null,
+      2
+    );
 
-    document.getElementById("btnRerollSecondary").disabled = false;
-    document.getElementById("btnRerollPrimary").disabled = false;
+    const btnRerollSecondary = document.getElementById("btnRerollSecondary");
+    const btnRerollPrimary = document.getElementById("btnRerollPrimary");
+
+    if (btnRerollSecondary) btnRerollSecondary.disabled = false;
+    if (btnRerollPrimary) btnRerollPrimary.disabled = false;
   }
 
-  document.getElementById("btnGenerate").addEventListener("click", () => {
-    generatePrimary();
-    generateSecondary();
-    render();
-  });
+  function wireUI() {
+    const btnGenerate = document.getElementById("btnGenerate");
+    const btnRerollSecondary = document.getElementById("btnRerollSecondary");
+    const btnRerollPrimary = document.getElementById("btnRerollPrimary");
 
-  document.getElementById("btnRerollSecondary").addEventListener("click", () => {
-    generateSecondary();
-    render();
-  });
+    if (!btnGenerate) throw new Error("Missing #btnGenerate element in generator.html.");
 
-  document.getElementById("btnRerollPrimary").addEventListener("click", () => {
-    generatePrimary();
-    generateSecondary();
-    render();
-  });
+    btnGenerate.addEventListener("click", () => {
+      generatePrimary();
+      generateSecondary();
+      render();
+    });
 
+    if (btnRerollSecondary) {
+      btnRerollSecondary.addEventListener("click", () => {
+        generateSecondary();
+        render();
+      });
+    }
+
+    if (btnRerollPrimary) {
+      btnRerollPrimary.addEventListener("click", () => {
+        generatePrimary();
+        generateSecondary();
+        render();
+      });
+    }
+  }
+
+  wireUI();
   render();
 })();
