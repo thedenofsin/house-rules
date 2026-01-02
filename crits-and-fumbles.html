@@ -1,0 +1,239 @@
+<!-- Save as: crits-and-fumbles.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Crits & Fumbles (OSE House Rules)</title>
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --panel:#11131a;
+      --text:#e7e9ee;
+      --muted:#b7bcc7;
+      --line:#2a2f3a;
+      --accent:#9ad5ff;
+      --chip:#1a2030;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    header{
+      padding:28px 16px 12px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(154,213,255,0.10), rgba(0,0,0,0));
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:0 16px;}
+    h1{margin:0 0 8px;font-size:1.6rem}
+    .sub{color:var(--muted);margin:0 0 10px}
+    nav a{
+      color:var(--accent);
+      text-decoration:none;
+      margin-right:14px;
+      font-weight:600;
+    }
+    nav a:hover{text-decoration:underline}
+    main{padding:18px 0 40px;}
+    section{margin-top:26px;}
+    h2{margin:0 0 10px;font-size:1.25rem}
+    .note{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:12px 14px;
+      color:var(--muted);
+      margin:10px 0 14px;
+    }
+    .note strong{color:var(--text)}
+    .table-wrap{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:12px;
+      overflow:auto;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:880px;
+    }
+    th, td{
+      padding:10px 10px;
+      border-bottom:1px solid var(--line);
+      vertical-align:top;
+    }
+    th{
+      text-align:left;
+      color:var(--text);
+      background:rgba(255,255,255,0.03);
+      font-size:0.95rem;
+      position:sticky;
+      top:0;
+      z-index:1;
+    }
+    td{color:var(--text); font-size:0.95rem;}
+    .muted{color:var(--muted)}
+    .chip{
+      display:inline-block;
+      background:var(--chip);
+      border:1px solid var(--line);
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:0.78rem;
+      color:var(--muted);
+      margin-left:6px;
+      white-space:nowrap;
+    }
+    .tight ul{margin:6px 0 0 18px; padding:0}
+    .tight li{margin:4px 0}
+    footer{
+      border-top:1px solid var(--line);
+      padding:16px 0 30px;
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background:rgba(255,255,255,0.06);
+      border:1px solid var(--line);
+      border-radius:6px;
+      padding:1px 6px;
+      color:var(--text);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Crits &amp; Fumbles</h1>
+      <p class="sub">OSE house rules — printable d100 tables (single roll).</p>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="#crit">Critical Hits</a>
+        <a href="#fumble">Fumbles</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- CRITS -->
+    <section id="crit">
+      <h2>Critical Hit Table — All Weapons &amp; Magic</h2>
+      <div class="note tight">
+        <ul>
+          <li>A critical hit always deals <strong>maximum normal damage</strong>.</li>
+          <li><strong>Double Damage (DD)</strong> and <strong>Triple Damage (TD)</strong> always deal a minimum of <strong>MAX damage</strong>.</li>
+          <li><span class="kbd">00</span> is <strong>Immediate death</strong> for all categories.</li>
+          <li><strong>Anatomy rule:</strong> If the listed body part/condition doesn’t apply, ignore the effect and apply <strong>damage only</strong> (MAX/DD/TD).</li>
+          <li><strong>All monsters (humanoid or not)</strong> use the <strong>Semi-martial</strong> column by default.</li>
+        </ul>
+      </div>
+
+      <div class="table-wrap">
+        <table aria-label="Critical Hit Table">
+          <thead>
+            <tr>
+              <th>Martial</th>
+              <th>Semi-martial <span class="chip">All Monsters</span></th>
+              <th>Non-martial</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>01–64</td><td>01–72</td><td>01–80</td><td><strong>Max damage</strong></td></tr>
+
+            <tr><td>65–66</td><td>73–74</td><td>81</td><td><strong>DD</strong>; If target has groin, strike to groin. Target stunned for 1 round.</td></tr>
+            <tr><td>67–68</td><td>75</td><td>82</td><td><strong>DD</strong>; If target has head, strike to head. Target stunned for 2 rounds.</td></tr>
+            <tr><td>69–70</td><td>76–77</td><td>83</td><td><strong>DD</strong>; If target has fingers, fingers damaged. Target drops weapon in hand.</td></tr>
+            <tr><td>71–72</td><td>78–79</td><td>84</td><td><strong>DD</strong>; If target has eyes, strike to eyes. Target is blinded for 1d2 rounds.</td></tr>
+            <tr><td>73–74</td><td>80</td><td>85</td><td><strong>DD</strong>; If target has nose, nose shattered into sinus cavity. Stunned for 1d3 rounds.</td></tr>
+            <tr><td>75</td><td>81</td><td>86</td><td><strong>DD</strong>; If target has ears, massive ear injury. Unable to hear due to tinnitus until healed.</td></tr>
+            <tr><td>80</td><td>82</td><td>87</td><td><strong>DD</strong>; If target has brain, brain damage; SAVE or fall prone for 1d3 rounds.</td></tr>
+            <tr><td>81–82</td><td>83</td><td>88</td><td><strong>DD</strong>; If target has throat, throat damaged. Unable to speak until healed.</td></tr>
+            <tr><td>76–77</td><td>84–85</td><td>89</td><td><strong>DD</strong>; If target has ribs, rib injury. -2 AC until healed.</td></tr>
+            <tr><td>78–79</td><td>86</td><td>90</td><td><strong>DD</strong>; If target has armor, armor sundered and ribs injured. -4 AC if wearing armor, -2 if not.</td></tr>
+            <tr><td>83–84</td><td>87–88</td><td>91</td><td><strong>DD</strong>; If target has arms, arm injury. -4 strength until healed. Cannot wield 2-handed weapons until healed.</td></tr>
+            <tr><td>85</td><td>89</td><td>92</td><td><strong>DD</strong>; If target has jaw, jaw broken. 2:4 chance for spells to fizzle until healed.</td></tr>
+            <tr><td>86</td><td>90</td><td>93</td><td><strong>DD</strong>; If target has internal organs, massive internal injury. Stunned for 2 rounds. Silenced for 1d4 rounds (coughing blood).</td></tr>
+            <tr><td>87–88</td><td>91–92</td><td>94</td><td><strong>DD</strong>; If target has leg, leg bone broken; +1d6 damage and prone for 2 rounds. Speed reduced by 50% until healed.</td></tr>
+            <tr><td>89</td><td>93</td><td>95</td><td><strong>DD</strong>; If target has hips, hip injury; +1d6 damage. Pelvis fractured; fall and prone 3 rounds. -5 dexterity until healed. Speed reduced to 0 until healed.</td></tr>
+
+            <tr><td>90–92</td><td>94–95</td><td>96</td><td><strong>TD</strong>; If target has arms, massive arm injury; +1d8 damage. Save or arm is severed/shattered and useless.</td></tr>
+            <tr><td>93–95</td><td>96–97</td><td>97</td><td><strong>TD</strong>; If target has leg, leg severed below knee/disintegrated. Target falls prone for 3 rounds. DEX reduced to 3.</td></tr>
+            <tr><td>96–97</td><td>98</td><td>98</td><td><strong>TD</strong>; If target has spine, spinal cord injury. Paralyzed for 2d4 rounds. Save or permanently paralyzed until healed.</td></tr>
+            <tr><td>98–99</td><td>99</td><td>99</td><td><strong>TD</strong>; If target has skull, skull caved in. -7 intelligence. 50% of memorized spells lost. Save or die.</td></tr>
+
+            <tr><td>00</td><td>00</td><td>00</td><td><strong>Immediate death.</strong> No save.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FUMBLES -->
+    <section id="fumble">
+      <h2>Fumble Table — All Weapons &amp; Magic</h2>
+      <div class="note tight">
+        <ul>
+          <li><strong>Monsters using natural weapons</strong> use the <strong>Martial</strong> column.</li>
+          <li><strong>Humanoid monsters using weapons/tools</strong> use the <strong>Semi-martial</strong> column.</li>
+          <li><span class="kbd">00</span> is <strong>Immediate death</strong> for all categories.</li>
+        </ul>
+      </div>
+
+      <div class="table-wrap">
+        <table aria-label="Fumble Table">
+          <thead>
+            <tr>
+              <th>Martial <span class="chip">Monsters: Natural Weapons</span></th>
+              <th>Semi-martial <span class="chip">Humanoid Monsters</span></th>
+              <th>Non-martial</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>01–50</td><td>01–42</td><td>01–34</td><td>Slip, lose action.</td></tr>
+            <tr><td>51–80</td><td>43–72</td><td>35–64</td><td>Stumble, lose footing, -1 AC penalty for 1 round.</td></tr>
+
+            <tr><td>81</td><td>73–74</td><td>65–66</td><td>Trip, fall, bang head; stunned for 1 round. No effect if wearing a helmet.</td></tr>
+            <tr><td>82</td><td>75–76</td><td>67–68</td><td>Lose grip, drop weapon (or focus); roll 1d8 direction, 3d4 distance (feet).</td></tr>
+            <tr><td>83</td><td>77–78</td><td>69–70</td><td>Weapon/armor malfunction. Unable to attack for 2 rounds until issue resolved.</td></tr>
+            <tr><td>84</td><td>79–80</td><td>71–72</td><td>Helmet slips over eyes/blood/sweat/etc. in eyes. Blinded for 1 round.</td></tr>
+            <tr><td>85</td><td>81–82</td><td>73–74</td><td>Stumble; genitals slammed. Stunned for 1 round.</td></tr>
+            <tr><td>86</td><td>83–84</td><td>75–76</td><td>Armor malfunction (no effect if no armor); -3 AC penalty until out of combat and can fix armor.</td></tr>
+            <tr><td>87</td><td>85–86</td><td>77–78</td><td>Poke self in eye; 1d6 damage and blinded for 1 round.</td></tr>
+            <tr><td>88</td><td>87–88</td><td>79–80</td><td>Hit self for 50% damage.</td></tr>
+            <tr><td>89</td><td>89</td><td>81–82</td><td>Severe ankle injury; lose action. 2d4 subdual damage; -2 dexterity &amp; speed reduced by 10’ until healed.</td></tr>
+            <tr><td>90</td><td>90</td><td>83–84</td><td>Jam toes; stumble forward 10 feet, falling prone for 1 round.</td></tr>
+            <tr><td>91</td><td>91</td><td>85–86</td><td>Slip, fall, break leg. 2d6 damage and prone for 1 round. Speed cannot exceed 10’ until healed.</td></tr>
+            <tr><td>92</td><td>92</td><td>87–88</td><td>Slip, fall, bang head; unconscious for 2d4 rounds. If wearing a helmet, helmet falls off.</td></tr>
+            <tr><td>93</td><td>93</td><td>89–90</td><td>Save or weapon breaks. For magical items, add +3 to each level above mundane.</td></tr>
+            <tr><td>94</td><td>94</td><td>91–92</td><td>Hit self, max damage.</td></tr>
+            <tr><td>95</td><td>95</td><td>93–94</td><td>Hit closest ally, max damage. If an ally is not in range, hit self.</td></tr>
+            <tr><td>96</td><td>96</td><td>95–96</td><td>Hit self, double damage.</td></tr>
+            <tr><td>97</td><td>97</td><td>97</td><td>Hit closest ally, double damage. If an ally is not in range, hit self.</td></tr>
+            <tr><td>98</td><td>98</td><td>98</td><td>Hit self, triple damage + roll on crit table for any additional effects (no increase to damage).</td></tr>
+            <tr><td>99</td><td>99</td><td>99</td><td>Hit closest ally, triple damage + roll on crit table for any additional effects (no increase to damage). If an ally is not in range, hit self.</td></tr>
+            <tr><td>00</td><td>00</td><td>00</td><td>Freak accident. Immediate death. No save.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="muted">
+        Tip: add a link to this page from <span class="kbd">index.html</span>, e.g.:
+        <span class="kbd">&lt;a href="crits-and-fumbles.html"&gt;Crits &amp; Fumbles&lt;/a&gt;</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
