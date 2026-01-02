@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Background Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Background Generator</h1>
+      <p class="muted">
+        Rolls 1d100 to select a category, then 1d100 to select a profession from that category.
+      </p>
+      <p><a href="index.html">← Back</a></p>
+    </header>
+
+    <section class="card">
+      <div class="row">
+        <button id="btnGenerate" class="btn">Generate Background</button>
+        <button id="btnRerollSecondary" class="btn btn-secondary" disabled>Reroll Secondary</button>
+        <button id="btnRerollPrimary" class="btn btn-secondary" disabled>Reroll Primary</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div id="output" class="output" aria-live="polite">
+        <p class="muted">Click “Generate Background”.</p>
+      </div>
+
+      <details class="details">
+        <summary>Show roll details</summary>
+        <pre id="debug" class="debug"></pre>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2>Notes</h2>
+      <ul>
+        <li>“Apprentice – Pick a profession.” triggers an extra profession roll and labels it as an apprenticeship.</li>
+        <li>If you want “primary profession” + “secondary profession” as two independent rolls, it’s easy to add.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="tables.js"></script>
+  <script src="generator.js"></script>
+</body>
+</html>
