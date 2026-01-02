@@ -140,12 +140,12 @@
 
     <div class="grid">
       <section class="panel">
-        <h2>Critical Hits <span class="chip">Semi-martial = All Monsters</span></h2>
+        <h2>Critical Hits</h2>
         <table aria-label="Critical Lookup">
           <thead>
             <tr>
               <th>Martial</th>
-              <th>Semi-martial</th>
+              <th>Semi-martial <span class="chip">Semi-martial = All Monsters</span></th>
               <th>Non-martial</th>
             </tr>
           </thead>
@@ -160,12 +160,12 @@
       </section>
 
       <section class="panel">
-        <h2>Fumbles <span class="chip">Martial = Natural-weapon monsters</span><span class="chip">Semi = Humanoid monsters</span></h2>
+        <h2>Fumbles</h2>
         <table aria-label="Fumble Lookup">
           <thead>
             <tr>
-              <th>Martial</th>
-              <th>Semi-martial</th>
+              <th>Martial <span class="chip">Monsters</span></th>
+              <th>Semi-martial Martial <span class="chip"><span class="chip">Humanoid monsters</span></th>
               <th>Non-martial</th>
             </tr>
           </thead>
@@ -210,9 +210,9 @@
       if (r === 100) return "Immediate death. No save.";
 
       // Category bands from the finalized table
-      // Martial: Max 1-64, DD 65-89, TD 90-99
-      // Semi:    Max 1-72, DD 73-93, TD 94-99
-      // Non:     Max 1-80, DD 81-95, TD 96-99
+      // Martial: Max 1-64, Double Damage 65-89, Triple Damage 90-99
+      // Semi:    Max 1-72, Double Damage 73-93, Triple Damage 94-99
+      // Non:     Max 1-80, Double Damage 81-95, Triple Damage 96-99
       const bands = {
         M: { maxEnd:64, ddStart:65, ddEnd:89, tdStart:90, tdEnd:99 },
         S: { maxEnd:72, ddStart:73, ddEnd:93, tdStart:94, tdEnd:99 },
@@ -222,103 +222,103 @@
 
       if (r <= b.maxEnd) return "Max damage.";
 
-      // DD rows / mappings
-      // We map each column roll number to the corresponding DD effect.
+      // Double Damage rows / mappings
+      // We map each column roll number to the corresponding Double Damage effect.
       // For simplicity and speed: build explicit per-category ranges.
       const dd = {
         M: [
-          { lo:65, hi:66, txt:"DD; If target has groin, strike to groin. Target stunned for 1 round." },
-          { lo:67, hi:68, txt:"DD; If target has head, strike to head. Target stunned for 2 rounds." },
-          { lo:69, hi:70, txt:"DD; If target has fingers, fingers damaged. Target drops weapon in hand." },
-          { lo:71, hi:72, txt:"DD; If target has eyes, strike to eyes. Target is blinded for 1d2 rounds." },
-          { lo:73, hi:74, txt:"DD; If target has nose, nose shattered into sinus cavity. Stunned for 1d3 rounds." },
-          { lo:75, hi:75, txt:"DD; If target has ears, massive ear injury. Unable to hear due to tinnitus until healed." },
-          // Note: 76–79 are other DD effects; 80 is brain per your table ordering
-          { lo:76, hi:77, txt:"DD; If target has ribs, rib injury. -2 AC until healed." },
-          { lo:78, hi:79, txt:"DD; If target has armor, armor sundered and ribs injured. -4 AC if wearing armor, -2 if not." },
-          { lo:80, hi:80, txt:"DD; If target has brain, brain damage; SAVE or fall prone for 1d3 rounds." },
-          { lo:81, hi:82, txt:"DD; If target has throat, throat damaged. Unable to speak until healed." },
-          { lo:83, hi:84, txt:"DD; If target has arms, arm injury. -4 strength until healed. Cannot wield 2-handed weapons until healed." },
-          { lo:85, hi:85, txt:"DD; If target has jaw, jaw broken. 2:4 chance for spells to fizzle until healed." },
-          { lo:86, hi:86, txt:"DD; If target has internal organs, massive internal injury. Stunned for 2 rounds. Silenced for 1d4 rounds (coughing blood)." },
-          { lo:87, hi:88, txt:"DD; If target has leg, leg bone broken; +1d6 damage and prone for 2 rounds. Speed reduced by 50% until healed." },
-          { lo:89, hi:89, txt:"DD; If target has hips, hip injury; +1d6 damage. Pelvis fractured; fall and prone 3 rounds. -5 dexterity until healed. Speed reduced to 0 until healed." },
+          { lo:65, hi:66, txt:"Double Damage; If target has groin, strike to groin. Target stunned for 1 round." },
+          { lo:67, hi:68, txt:"Double Damage; If target has head, strike to head. Target stunned for 2 rounds." },
+          { lo:69, hi:70, txt:"Double Damage; If target has fingers, fingers damaged. Target drops weapon in hand." },
+          { lo:71, hi:72, txt:"Double Damage; If target has eyes, strike to eyes. Target is blinded for 1d2 rounds." },
+          { lo:73, hi:74, txt:"Double Damage; If target has nose, nose shattered into sinus cavity. Stunned for 1d3 rounds." },
+          { lo:75, hi:75, txt:"Double Damage; If target has ears, massive ear injury. Unable to hear due to tinnitus until healed." },
+          // Note: 76–79 are other Double Damage effects; 80 is brain per your table ordering
+          { lo:76, hi:77, txt:"Double Damage; If target has ribs, rib injury. -2 AC until healed." },
+          { lo:78, hi:79, txt:"Double Damage; If target has armor, armor sundered and ribs injured. -4 AC if wearing armor, -2 if not." },
+          { lo:80, hi:80, txt:"Double Damage; If target has brain, brain damage; SAVE or fall prone for 1d3 rounds." },
+          { lo:81, hi:82, txt:"Double Damage; If target has throat, throat damaged. Unable to speak until healed." },
+          { lo:83, hi:84, txt:"Double Damage; If target has arms, arm injury. -4 strength until healed. Cannot wield 2-handed weapons until healed." },
+          { lo:85, hi:85, txt:"Double Damage; If target has jaw, jaw broken. 2:4 chance for spells to fizzle until healed." },
+          { lo:86, hi:86, txt:"Double Damage; If target has internal organs, massive internal injury. Stunned for 2 rounds. Silenced for 1d4 rounds (coughing blood)." },
+          { lo:87, hi:88, txt:"Double Damage; If target has leg, leg bone broken; +1d6 damage and prone for 2 rounds. Speed reduced by 50% until healed." },
+          { lo:89, hi:89, txt:"Double Damage; If target has hips, hip injury; +1d6 damage. Pelvis fractured; fall and prone 3 rounds. -5 dexterity until healed. Speed reduced to 0 until healed." },
         ],
         S: [
-          { lo:73, hi:74, txt:"DD; If target has groin, strike to groin. Target stunned for 1 round." },
-          { lo:75, hi:75, txt:"DD; If target has head, strike to head. Target stunned for 2 rounds." },
-          { lo:76, hi:77, txt:"DD; If target has fingers, fingers damaged. Target drops weapon in hand." },
-          { lo:78, hi:79, txt:"DD; If target has eyes, strike to eyes. Target is blinded for 1d2 rounds." },
-          { lo:80, hi:80, txt:"DD; If target has nose, nose shattered into sinus cavity. Stunned for 1d3 rounds." },
-          { lo:81, hi:81, txt:"DD; If target has ears, massive ear injury. Unable to hear due to tinnitus until healed." },
-          { lo:82, hi:82, txt:"DD; If target has brain, brain damage; SAVE or fall prone for 1d3 rounds." },
-          { lo:83, hi:83, txt:"DD; If target has throat, throat damaged. Unable to speak until healed." },
-          { lo:84, hi:85, txt:"DD; If target has ribs, rib injury. -2 AC until healed." },
-          { lo:86, hi:86, txt:"DD; If target has armor, armor sundered and ribs injured. -4 AC if wearing armor, -2 if not." },
-          { lo:87, hi:88, txt:"DD; If target has arms, arm injury. -4 strength until healed. Cannot wield 2-handed weapons until healed." },
-          { lo:89, hi:89, txt:"DD; If target has jaw, jaw broken. 2:4 chance for spells to fizzle until healed." },
-          { lo:90, hi:90, txt:"DD; If target has internal organs, massive internal injury. Stunned for 2 rounds. Silenced for 1d4 rounds (coughing blood)." },
-          { lo:91, hi:92, txt:"DD; If target has leg, leg bone broken; +1d6 damage and prone for 2 rounds. Speed reduced by 50% until healed." },
-          { lo:93, hi:93, txt:"DD; If target has hips, hip injury; +1d6 damage. Pelvis fractured; fall and prone 3 rounds. -5 dexterity until healed. Speed reduced to 0 until healed." },
+          { lo:73, hi:74, txt:"Double Damage; If target has groin, strike to groin. Target stunned for 1 round." },
+          { lo:75, hi:75, txt:"Double Damage; If target has head, strike to head. Target stunned for 2 rounds." },
+          { lo:76, hi:77, txt:"Double Damage; If target has fingers, fingers damaged. Target drops weapon in hand." },
+          { lo:78, hi:79, txt:"Double Damage; If target has eyes, strike to eyes. Target is blinded for 1d2 rounds." },
+          { lo:80, hi:80, txt:"Double Damage; If target has nose, nose shattered into sinus cavity. Stunned for 1d3 rounds." },
+          { lo:81, hi:81, txt:"Double Damage; If target has ears, massive ear injury. Unable to hear due to tinnitus until healed." },
+          { lo:82, hi:82, txt:"Double Damage; If target has brain, brain damage; SAVE or fall prone for 1d3 rounds." },
+          { lo:83, hi:83, txt:"Double Damage; If target has throat, throat damaged. Unable to speak until healed." },
+          { lo:84, hi:85, txt:"Double Damage; If target has ribs, rib injury. -2 AC until healed." },
+          { lo:86, hi:86, txt:"Double Damage; If target has armor, armor sundered and ribs injured. -4 AC if wearing armor, -2 if not." },
+          { lo:87, hi:88, txt:"Double Damage; If target has arms, arm injury. -4 strength until healed. Cannot wield 2-handed weapons until healed." },
+          { lo:89, hi:89, txt:"Double Damage; If target has jaw, jaw broken. 2:4 chance for spells to fizzle until healed." },
+          { lo:90, hi:90, txt:"Double Damage; If target has internal organs, massive internal injury. Stunned for 2 rounds. Silenced for 1d4 rounds (coughing blood)." },
+          { lo:91, hi:92, txt:"Double Damage; If target has leg, leg bone broken; +1d6 damage and prone for 2 rounds. Speed reduced by 50% until healed." },
+          { lo:93, hi:93, txt:"Double Damage; If target has hips, hip injury; +1d6 damage. Pelvis fractured; fall and prone 3 rounds. -5 dexterity until healed. Speed reduced to 0 until healed." },
         ],
         N: [
-          { lo:81, hi:81, txt:"DD; If target has groin, strike to groin. Target stunned for 1 round." },
-          { lo:82, hi:82, txt:"DD; If target has head, strike to head. Target stunned for 2 rounds." },
-          { lo:83, hi:83, txt:"DD; If target has fingers, fingers damaged. Target drops weapon in hand." },
-          { lo:84, hi:84, txt:"DD; If target has eyes, strike to eyes. Target is blinded for 1d2 rounds." },
-          { lo:85, hi:85, txt:"DD; If target has nose, nose shattered into sinus cavity. Stunned for 1d3 rounds." },
-          { lo:86, hi:86, txt:"DD; If target has ears, massive ear injury. Unable to hear due to tinnitus until healed." },
-          { lo:87, hi:87, txt:"DD; If target has brain, brain damage; SAVE or fall prone for 1d3 rounds." },
-          { lo:88, hi:88, txt:"DD; If target has throat, throat damaged. Unable to speak until healed." },
-          { lo:89, hi:89, txt:"DD; If target has ribs, rib injury. -2 AC until healed." },
-          { lo:90, hi:90, txt:"DD; If target has armor, armor sundered and ribs injured. -4 AC if wearing armor, -2 if not." },
-          { lo:91, hi:91, txt:"DD; If target has arms, arm injury. -4 strength until healed. Cannot wield 2-handed weapons until healed." },
-          { lo:92, hi:92, txt:"DD; If target has jaw, jaw broken. 2:4 chance for spells to fizzle until healed." },
-          { lo:93, hi:93, txt:"DD; If target has internal organs, massive internal injury. Stunned for 2 rounds. Silenced for 1d4 rounds (coughing blood)." },
-          { lo:94, hi:94, txt:"DD; If target has leg, leg bone broken; +1d6 damage and prone for 2 rounds. Speed reduced by 50% until healed." },
-          { lo:95, hi:95, txt:"DD; If target has hips, hip injury; +1d6 damage. Pelvis fractured; fall and prone 3 rounds. -5 dexterity until healed. Speed reduced to 0 until healed." },
+          { lo:81, hi:81, txt:"Double Damage; If target has groin, strike to groin. Target stunned for 1 round." },
+          { lo:82, hi:82, txt:"Double Damage; If target has head, strike to head. Target stunned for 2 rounds." },
+          { lo:83, hi:83, txt:"Double Damage; If target has fingers, fingers damaged. Target drops weapon in hand." },
+          { lo:84, hi:84, txt:"Double Damage; If target has eyes, strike to eyes. Target is blinded for 1d2 rounds." },
+          { lo:85, hi:85, txt:"Double Damage; If target has nose, nose shattered into sinus cavity. Stunned for 1d3 rounds." },
+          { lo:86, hi:86, txt:"Double Damage; If target has ears, massive ear injury. Unable to hear due to tinnitus until healed." },
+          { lo:87, hi:87, txt:"Double Damage; If target has brain, brain damage; SAVE or fall prone for 1d3 rounds." },
+          { lo:88, hi:88, txt:"Double Damage; If target has throat, throat damaged. Unable to speak until healed." },
+          { lo:89, hi:89, txt:"Double Damage; If target has ribs, rib injury. -2 AC until healed." },
+          { lo:90, hi:90, txt:"Double Damage; If target has armor, armor sundered and ribs injured. -4 AC if wearing armor, -2 if not." },
+          { lo:91, hi:91, txt:"Double Damage; If target has arms, arm injury. -4 strength until healed. Cannot wield 2-handed weapons until healed." },
+          { lo:92, hi:92, txt:"Double Damage; If target has jaw, jaw broken. 2:4 chance for spells to fizzle until healed." },
+          { lo:93, hi:93, txt:"Double Damage; If target has internal organs, massive internal injury. Stunned for 2 rounds. Silenced for 1d4 rounds (coughing blood)." },
+          { lo:94, hi:94, txt:"Double Damage; If target has leg, leg bone broken; +1d6 damage and prone for 2 rounds. Speed reduced by 50% until healed." },
+          { lo:95, hi:95, txt:"Double Damage; If target has hips, hip injury; +1d6 damage. Pelvis fractured; fall and prone 3 rounds. -5 dexterity until healed. Speed reduced to 0 until healed." },
         ],
       };
 
-      // TD rows / mappings
+      // Triple Damage rows / mappings
       const td = {
         M: [
-          { lo:90, hi:92, txt:"TD; If target has arms, massive arm injury; +1d8 damage. Save or arm is severed/shattered and useless." },
-          { lo:93, hi:95, txt:"TD; If target has leg, leg severed below knee/disintegrated. Target falls prone for 3 rounds. DEX reduced to 3." },
-          { lo:96, hi:97, txt:"TD; If target has spine, spinal cord injury. Paralyzed for 2d4 rounds. Save or permanently paralyzed until healed." },
-          { lo:98, hi:99, txt:"TD; If target has skull, skull caved in. -7 intelligence. 50% of memorized spells lost. Save or die." },
+          { lo:90, hi:92, txt:"Triple Damage; If target has arms, massive arm injury; +1d8 damage. Save or arm is severed/shattered and useless." },
+          { lo:93, hi:95, txt:"Triple Damage; If target has leg, leg severed below knee/disintegrated. Target falls prone for 3 rounds. DEX reduced to 3." },
+          { lo:96, hi:97, txt:"Triple Damage; If target has spine, spinal cord injury. Paralyzed for 2d4 rounds. Save or permanently paralyzed until healed." },
+          { lo:98, hi:99, txt:"Triple Damage; If target has skull, skull caved in. -7 intelligence. 50% of memorized spells lost. Save or die." },
         ],
         S: [
-          { lo:94, hi:95, txt:"TD; If target has arms, massive arm injury; +1d8 damage. Save or arm is severed/shattered and useless." },
-          { lo:96, hi:97, txt:"TD; If target has leg, leg severed below knee/disintegrated. Target falls prone for 3 rounds. DEX reduced to 3." },
-          { lo:98, hi:98, txt:"TD; If target has spine, spinal cord injury. Paralyzed for 2d4 rounds. Save or permanently paralyzed until healed." },
-          { lo:99, hi:99, txt:"TD; If target has skull, skull caved in. -7 intelligence. 50% of memorized spells lost. Save or die." },
+          { lo:94, hi:95, txt:"Triple Damage; If target has arms, massive arm injury; +1d8 damage. Save or arm is severed/shattered and useless." },
+          { lo:96, hi:97, txt:"Triple Damage; If target has leg, leg severed below knee/disintegrated. Target falls prone for 3 rounds. DEX reduced to 3." },
+          { lo:98, hi:98, txt:"Triple Damage; If target has spine, spinal cord injury. Paralyzed for 2d4 rounds. Save or permanently paralyzed until healed." },
+          { lo:99, hi:99, txt:"Triple Damage; If target has skull, skull caved in. -7 intelligence. 50% of memorized spells lost. Save or die." },
         ],
         N: [
-          { lo:96, hi:96, txt:"TD; If target has arms, massive arm injury; +1d8 damage. Save or arm is severed/shattered and useless." },
-          { lo:97, hi:97, txt:"TD; If target has leg, leg severed below knee/disintegrated. Target falls prone for 3 rounds. DEX reduced to 3." },
-          { lo:98, hi:98, txt:"TD; If target has spine, spinal cord injury. Paralyzed for 2d4 rounds. Save or permanently paralyzed until healed." },
-          { lo:99, hi:99, txt:"TD; If target has skull, skull caved in. -7 intelligence. 50% of memorized spells lost. Save or die." },
+          { lo:96, hi:96, txt:"Triple Damage; If target has arms, massive arm injury; +1d8 damage. Save or arm is severed/shattered and useless." },
+          { lo:97, hi:97, txt:"Triple Damage; If target has leg, leg severed below knee/disintegrated. Target falls prone for 3 rounds. DEX reduced to 3." },
+          { lo:98, hi:98, txt:"Triple Damage; If target has spine, spinal cord injury. Paralyzed for 2d4 rounds. Save or permanently paralyzed until healed." },
+          { lo:99, hi:99, txt:"Triple Damage; If target has skull, skull caved in. -7 intelligence. 50% of memorized spells lost. Save or die." },
         ],
       };
 
-      // If in DD band, find matching DD entry
+      // If in Double Damage band, find matching Double Damage entry
       if (r >= b.ddStart && r <= b.ddEnd) {
         const arr = dd[category];
         for (const e of arr) {
           if (r >= e.lo && r <= e.hi) return e.txt;
         }
         // Fallback (shouldn't happen if mapping is correct)
-        return "DD; (mapping error — check table ranges).";
+        return "Double Damage; (mapping error — check table ranges).";
       }
 
-      // If in TD band, find matching TD entry
+      // If in Triple Damage band, find matching Triple Damage entry
       if (r >= b.tdStart && r <= b.tdEnd) {
         const arr = td[category];
         for (const e of arr) {
           if (r >= e.lo && r <= e.hi) return e.txt;
         }
-        return "TD; (mapping error — check table ranges).";
+        return "Triple Damage; (mapping error — check table ranges).";
       }
 
       return "(No result — check table logic.)";
